@@ -2,15 +2,16 @@ package app
 
 import (
 	"fmt"
-	"github.com/f1bonacc1/process-compose/src/config"
-	"github.com/f1bonacc1/process-compose/src/pclog"
-	"github.com/f1bonacc1/process-compose/src/types"
 	"os"
 	"os/user"
 	"runtime"
 	"slices"
 	"sync"
 	"time"
+
+	"github.com/f1bonacc1/process-compose/src/config"
+	"github.com/f1bonacc1/process-compose/src/pclog"
+	"github.com/f1bonacc1/process-compose/src/types"
 
 	"github.com/rs/zerolog/log"
 )
@@ -266,6 +267,11 @@ func (p *ProjectRunner) StartProcess(name string) error {
 		return fmt.Errorf("no such process: %s", name)
 	}
 
+	return nil
+}
+
+func (p *ProjectRunner) AddProcess(proc types.ProcessConfig) error {
+	p.addProcessAndRun(proc)
 	return nil
 }
 

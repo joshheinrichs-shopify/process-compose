@@ -3,12 +3,13 @@ package client
 import (
 	"context"
 	"fmt"
-	"github.com/f1bonacc1/process-compose/src/pclog"
-	"github.com/f1bonacc1/process-compose/src/types"
 	"net"
 	"net/http"
 	"sync"
 	"time"
+
+	"github.com/f1bonacc1/process-compose/src/pclog"
+	"github.com/f1bonacc1/process-compose/src/types"
 )
 
 var (
@@ -126,6 +127,10 @@ func (p *PcClient) RestartProcess(name string) error {
 
 func (p *PcClient) ScaleProcess(name string, scale int) error {
 	return p.scaleProcess(name, scale)
+}
+
+func (p *PcClient) AddProcess(processConfig types.ProcessConfig) error {
+	return p.addProcess(processConfig)
 }
 
 func (p *PcClient) IsAlive() error {

@@ -5,6 +5,8 @@ import (
 	"strconv"
 
 	"github.com/f1bonacc1/process-compose/src/app"
+	"github.com/f1bonacc1/process-compose/src/loader"
+	"github.com/f1bonacc1/process-compose/src/types"
 	"github.com/gin-gonic/gin"
 )
 
@@ -165,6 +167,35 @@ func (api *PcApi) StartProcess(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"name": name})
+}
+
+// @Schemes
+// @Description Starts the process if the state is not 'running' or 'pending'
+// @Tags Process
+// @Summary Start a process
+// @Produce  json
+// @Param name path string true "Process Name"
+// @Success 200 {string} string "Started Process Name"
+// @Router /process/start/{name} [post]
+func (api *PcApi) AddProcess(c *gin.Context) {
+
+	proc := types.ProcessConfig{}
+	if err := c.ShouldBindJSON(&proc); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// TODO: not good
+	loader.AssignExecutableAndArgsForProc(&proc)
+	proc.ReplicaName = proc.Name
+
+	err := api.project.AddProcess(proc)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, proc)
 }
 
 // @Schemes

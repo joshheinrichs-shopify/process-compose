@@ -2,9 +2,10 @@ package types
 
 import (
 	"fmt"
-	"github.com/f1bonacc1/process-compose/src/health"
 	"math"
 	"time"
+
+	"github.com/f1bonacc1/process-compose/src/health"
 )
 
 const DefaultNamespace = "default"
@@ -14,28 +15,28 @@ type Processes map[string]ProcessConfig
 type Environment []string
 type ProcessConfig struct {
 	Name              string
-	Disabled          bool                   `yaml:"disabled,omitempty"`
-	IsDaemon          bool                   `yaml:"is_daemon,omitempty"`
-	Command           string                 `yaml:"command"`
-	Entrypoint        []string               `yaml:"entrypoint"`
-	LogLocation       string                 `yaml:"log_location,omitempty"`
-	LoggerConfig      *LoggerConfig          `yaml:"log_configuration,omitempty"`
-	Environment       Environment            `yaml:"environment,omitempty"`
-	RestartPolicy     RestartPolicyConfig    `yaml:"availability,omitempty"`
-	DependsOn         DependsOnConfig        `yaml:"depends_on,omitempty"`
-	LivenessProbe     *health.Probe          `yaml:"liveness_probe,omitempty"`
-	ReadinessProbe    *health.Probe          `yaml:"readiness_probe,omitempty"`
-	ReadyLogLine      string                 `yaml:"ready_log_line,omitempty"`
-	ShutDownParams    ShutDownParams         `yaml:"shutdown,omitempty"`
-	DisableAnsiColors bool                   `yaml:"disable_ansi_colors,omitempty"`
-	WorkingDir        string                 `yaml:"working_dir"`
-	Namespace         string                 `yaml:"namespace"`
-	Replicas          int                    `yaml:"replicas"`
-	Extensions        map[string]interface{} `yaml:",inline"`
-	Description       string                 `yaml:"description,omitempty"`
-	Vars              Vars                   `yaml:"vars"`
-	IsForeground      bool                   `yaml:"is_foreground"`
-	IsTty             bool                   `yaml:"is_tty"`
+	Disabled          bool                   `yaml:"disabled,omitempty" json:"disabled,omitempty"`
+	IsDaemon          bool                   `yaml:"is_daemon,omitempty" json:"is_daemon,omitempty"`
+	Command           string                 `yaml:"command" json:"command"`
+	Entrypoint        []string               `yaml:"entrypoint" json:"entrypoint"`
+	LogLocation       string                 `yaml:"log_location,omitempty" json:"log_location,omitempty"`
+	LoggerConfig      *LoggerConfig          `yaml:"log_configuration,omitempty" json:"log_configuration,omitempty"`
+	Environment       Environment            `yaml:"environment,omitempty" json:"environment,omitempty"`
+	RestartPolicy     RestartPolicyConfig    `yaml:"availability,omitempty" json:"availability,omitempty"`
+	DependsOn         DependsOnConfig        `yaml:"depends_on,omitempty" json:"depends_on,omitempty"`
+	LivenessProbe     *health.Probe          `yaml:"liveness_probe,omitempty" json:"liveness_probe,omitempty"`
+	ReadinessProbe    *health.Probe          `yaml:"readiness_probe,omitempty" json:"readiness_probe,omitempty"`
+	ReadyLogLine      string                 `yaml:"ready_log_line,omitempty" json:"ready_log_line,omitempty"`
+	ShutDownParams    ShutDownParams         `yaml:"shutdown,omitempty" json:"shutdown,omitempty"`
+	DisableAnsiColors bool                   `yaml:"disable_ansi_colors,omitempty" json:"disable_ansi_colors,omitempty"`
+	WorkingDir        string                 `yaml:"working_dir" json:"working_dir"`
+	Namespace         string                 `yaml:"namespace" json:"namespace"`
+	Replicas          int                    `yaml:"replicas" json:"replicas"`
+	Extensions        map[string]interface{} `yaml:",inline" json:",inline"`
+	Description       string                 `yaml:"description,omitempty" json:"description,omitempty"`
+	Vars              Vars                   `yaml:"vars" json:"vars"`
+	IsForeground      bool                   `yaml:"is_foreground" json:"is_foreground"`
+	IsTty             bool                   `yaml:"is_tty" json:"is_tty"`
 	ReplicaNum        int
 	ReplicaName       string
 	Executable        string

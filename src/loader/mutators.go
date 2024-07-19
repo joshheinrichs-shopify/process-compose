@@ -2,12 +2,13 @@ package loader
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/f1bonacc1/process-compose/src/command"
 	"github.com/f1bonacc1/process-compose/src/health"
 	"github.com/f1bonacc1/process-compose/src/templater"
 	"github.com/f1bonacc1/process-compose/src/types"
 	"github.com/rs/zerolog/log"
-	"os"
 )
 
 type mutatorFunc func(p *types.Project)
@@ -108,6 +109,23 @@ func assignExecutableAndArgs(p *types.Project) {
 		}
 
 		p.Processes[name] = proc
+	}
+}
+
+// todo make proper loader
+func AssignExecutableAndArgsForProc(proc *types.ProcessConfig) {
+	if proc.Command != "" || len(proc.Entrypoint) == 0 {
+		if len(proc.Entrypoint) > 0 {
+			message := fmt.Sprintf("'command' and 'entrypoint' are set! Using command (process: %s)", proc.Name)
+			_, _ = fmt.Fprintln(os.Stderr, "process-compose:", message)
+			log.Warn().Msg(message)
+		}
+
+		proc.Executable = "bash"
+		proc.Args = []string{"-c", proc.Command}
+	} else {
+		proc.Executable = proc.Entrypoint[0]
+		proc.Args = proc.Entrypoint[1:]
 	}
 }
 
